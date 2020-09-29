@@ -32,39 +32,67 @@ def contains_doubles(items: list) -> bool:
 
 def best_grades(student_grades: dict) -> dict:
     # TODO: Retourner un dictionnaire contenant le nom de l'étudiant ayant la meilleure moyenne ainsi que sa moyenne
-    return {}
+    best_student = dict()
+    for key, value in student_grades.items():
+        avg = sum(value) / len(value)
+
+        if len(best_student) == 0 or list(best_student.values())[0] < avg:
+            best_students = {key: avg}
+
+    return {best_student: student_grades[best_student]}
 
 
 def frequence(sentence: str) -> dict:
     # TODO: Afficher les lettres les plus fréquentes
     #       Retourner le tableau de lettres
 
+    frequency = dict()
+
+    for letter in sentence:
+        frequency[letter] = sentence.count(letter)
+
+    sorted_keys = sorted(frequency, key=frequency.__getitem__, reverse=True)
+
+    for key in sorted_keys:
+        if frequency[key] > 5:
+            print(f"Le caractère {key} revient {frequency[key]} fois.")
+
     return {}
 
 
 def get_recipes():
     # TODO: Demander le nom d'une recette, puis ses ingredients et enregistrer dans une structure de données
-    pass
-
+    dictionnaire = dict()
+    name = input("Entrez le nom de votre recette :\n")
+    ingrediants = input("Entrez la liste d'ingrédiants de la recette, svp séparer les ingrédiants pas une virgule").split(",")
+    dictionnaire[name] = ingrediants
+    return dictionnaire
 
 def print_recipe(ingredients) -> None:
     # TODO: Demander le nom d'une recette, puis l'afficher si elle existe
-    pass
+    name = input("Entrez le nom d'une recette :\n")
+
+    if name in ingredients:
+        print(ingredients[name])
+    else:
+        print("La recette demande n'existe pas")
+        print(f"Les recettes existantes sont: {list(ingredients.keys())}")
+        print_recipe(ingredients)
 
 
 def main() -> None:
     print(f"On essaie d'ordonner les valeurs...")
-    #order()
+    order()
 
     print(f"On vérifie les anagrammes...")
-    #anagrams()
+    anagrams()
 
     my_list = [3, 3, 5, 6, 1, 1]
     print(f"Ma liste contient-elle des doublons? {contains_doubles(my_list)}")
 
     grades = {"Bob": [90, 65, 20], "Alice": [85, 75, 83]}
-    best_student = best_grades(grades)
-    print(f"{list(best_student.keys())[0]} a la meilleure moyenne: {list(best_student.values())[0]}")
+    #best_student = best_grades(grades)
+    #print(f"{list(best_student.keys())[0]} a la meilleure moyenne: {list(best_student.values())[0]}")
 
     sentence = "bonjour, je suis une phrase. je suis compose de beaucoup de lettre. oui oui"
     frequence(sentence)
